@@ -126,7 +126,7 @@ int main(){
 	char rotors[5][27]={"EKMFLGDQVZNTOWYHXUSPAIBRCJ", "AJDKSIRUXBLHWTMCQGZNPYFVOE","BDFHJLCPRTXVZNYEIWGAKMUSQO", "ESOVPZJAYQUIRHXLNFTGKDCMWB","VZBRGITYUPSDNHLXAWMJQOFECK"};
 	char notches[5]={'Q','E','V','J','Z'};
 	char reflector[27]="YRUHQSLDPXNGOKMIEBFZCWVJAT";
-	char plugboard[27]="XBZUTFKLIJGHMONPQRSEDVWAYC";
+	char plugboard[27]="ABCUTFKLIJGHMONPQRSEDVWXYZ";
 	char *enc;
 	char *dec;
 	struct enigma e1=initialize_enigma(rotors,notches,0,1,3,reflector,plugboard,'B','E','R','G','E','C');
