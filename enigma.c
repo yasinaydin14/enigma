@@ -129,8 +129,8 @@ int main(){
 	char plugboard[27]="XBZUTFKLIJGHMONPQRSEDVWAYC";
 	char *enc;
 	char *dec;
-	struct enigma e1=initialize_enigma(rotors,notches,0,1,3,reflector,plugboard,'Y','Y','Y','A','R','Q');
-	struct enigma e2=initialize_enigma(rotors,notches,0,1,3,reflector,plugboard,'Y','Y','Y','A','R','Q');
+	struct enigma e1=initialize_enigma(rotors,notches,0,1,3,reflector,plugboard,'B','E','R','G','E','C');
+	struct enigma e2=initialize_enigma(rotors,notches,0,1,3,reflector,plugboard,'B','E','R','G','E','C');
 	enc=encode(&e1,"TURING",6);
 	printf("Encrypted message: %s \n",enc);
 	dec=encode(&e2,enc,6);
