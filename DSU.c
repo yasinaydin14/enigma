@@ -28,7 +28,7 @@ void make_set(struct DSU* dsu, char letter1, char letter2){
 		dsu->pc= realloc(dsu->pc,2*dsu->capacity*sizeof(struct plugboard_connection));
 		dsu->size= realloc(dsu->size,2*dsu->capacity*sizeof(int));
 		dsu->parent= realloc(dsu->parent,2*dsu->capacity*sizeof(int));
-		dsu->classes= realloc(dsu->parent,2*dsu->capacity*sizeof(int));
+		dsu->classes= realloc(dsu->classes,2*dsu->capacity*sizeof(int));
 		dsu->capacity= 2*dsu->capacity;
 	
 	}
@@ -65,10 +65,10 @@ void unite(struct DSU *d, int i, int j){
 				d->pc[b].truth_value=0;
 			}
 			if(truth_value(d,b)!=0){
-				int x=d->classes[b];
+				int x=b;
 				int flag=0;
 				do{
-					int y=d->classes[a];
+					int y= a;
 					do{
 						struct plugboard_connection p1=d->pc[x];
 						struct plugboard_connection p2=d->pc[y];
@@ -106,10 +106,10 @@ void unite(struct DSU *d, int i, int j){
 			}
 
 			if(truth_value(d,a)!=0){
-                                int x=d->classes[b];
+                                int x=b;
                                 int flag=0;
                                 do{
-                                        int y=d->classes[a];
+                                        int y=a;
                                         do{
                                                 struct plugboard_connection p1=d->pc[x];
                                                 struct plugboard_connection p2=d->pc[y];
@@ -183,12 +183,14 @@ int main(){
 	make_set(&d,'A', 'B');
 	make_set(&d, 'C','D');
 	make_set(&d,'F','E');
+	make_set(&d,'A','G');
 	for(i=0;i<d.length;i++){
 		printf("%c is connected to %c \n",d.pc[i].letter1, d.pc[i].letter2);
 		
 	}
 	unite(&d, 0,1);
 	unite(&d,0,2);
+	unite(&d,1,3);
 	printf("Size: %i\n",size(&d,1));
 	printf("Letter %c and Letter %c are matched in %i\n",'C', 'D', element(&d, 'C','D'));
 	printf("Index %i and index %i are %i\n",0,1,equivalent(&d,0,1));
