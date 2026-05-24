@@ -142,16 +142,14 @@ int main(){
 	char rotors[5][27]={"EKMFLGDQVZNTOWYHXUSPAIBRCJ", "AJDKSIRUXBLHWTMCQGZNPYFVOE","BDFHJLCPRTXVZNYEIWGAKMUSQO", "ESOVPZJAYQUIRHXLNFTGKDCMWB","VZBRGITYUPSDNHLXAWMJQOFECK"};
 	char notches[5]={'Q','E','V','J','Z'};
 	char reflector[27]="YRUHQSLDPXNGOKMIEBFZCWVJAT";
-	char plugboard[27]=/*"XBZUTFKLIJGHMONPQRSEDVWAYC";*/"XBZDTFKHIJGLMONPQRSEUVWAYC";
+	char plugboard[27]="ABCUTFKLIJGHMONPQRSEDVWXYZ";
 	char *enc;
 	char *dec;
 	struct enigma e1=initialize_enigma(rotors,notches,0,1,3,reflector,plugboard,'B','E','R','G','E','C');
 	struct enigma e2=initialize_enigma(rotors,notches,0,1,3,reflector,plugboard,'B','E','R','G','E','C');
-	struct rotor r1,r2,r3;
-	char* rotor_ref;
-	enc=encode(&e1,"YFBMQMYJMZZZZEKSMZGSOYUSPCQFOGYCGZPLLSRDTHTLPSPAHQUZW",53);
+	enc=encode(&e1,"TURING",6);
 	printf("Encrypted message: %s \n",enc);
-	dec=encode(&e2,enc,53);
+	dec=encode(&e2,enc,6);
 	printf("Decrypted message: %s \n",dec);
 
 	free(enc);
