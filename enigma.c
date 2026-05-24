@@ -52,18 +52,20 @@ struct rotor initialize_rotor(char *base_permutation,char ground_setting, char r
 	return r;
 }
 
-char *rotor_and_reflector_permutation(char* reflector, struct rotor *r1, struct rotor *r2, struct rotor *r3 ){
+char *rotor_and_reflector_permutation(char* reflector,char *plugboard, struct rotor *r1, struct rotor *r2, struct rotor *r3 ){
 	char *permutation=malloc(27*sizeof(char));
 	int i;
 	for(i=0;i<26;i++){
-		char x;
-		x=r3->current_permutation[i];
+		char x='A'+i;
+		/*x=plugboard[i];*/
+		x=r3->current_permutation[x-'A'];
 		x=r2->current_permutation[x-'A'];
 		x=r1->current_permutation[x-'A'];
 		x=reflector[x-'A'];
 		x=inverse_letter(r1,x);
 		x=inverse_letter(r2,x);
 		x=inverse_letter(r3,x);
+		/*x=plugboard[x-'A'];*/
 		permutation[i]=x;
 	}
 	permutation[26]=0;
@@ -98,6 +100,10 @@ char *encode(struct enigma* e, char *message, int n){
 	int i;
 	for(i=0;i<n;i++){
 		encripted_message[i]=encode_letter(e,message[i]);
+		printf("%c %c %c\n" , 'A'+(26+e->rotor1.ground_setting-e->rotor1.ring_setting)%26, 'A'+(26+e->rotor2.ground_setting-e->rotor2.ring_setting)%26,'A'+(26+e->rotor3.ground_setting-e->rotor3.ring_setting)%26);
+		printf("Current Letter:%c, Current Permutation : %s\n", e->rotor1.ground_setting,e->rotor1.current_permutation);
+		printf("Current Letter:%c, Current Permutation : %s\n", e->rotor2.ground_setting,e->rotor2.current_permutation);
+		printf("Current Letter:%c, Current Permutation : %s\n", e->rotor3.ground_setting,e->rotor3.current_permutation);
 	}
 	encripted_message[n]='\0';
 	return encripted_message;
@@ -110,32 +116,57 @@ char encode_letter(struct enigma *e,char c){
 		return 0;
 	}
 	rotate_rotors(e);
+	
 	x=e->plugboard_permutation[x-'A'];
+	printf("%c",x);
 	x=e->rotor3.current_permutation[x-'A'];
+	printf("%c",x);
         x=e->rotor2.current_permutation[x-'A'];
+		printf("%c",x);
         x=e->rotor1.current_permutation[x-'A'];
+		printf("%c",x);
         x=e->reflector[x-'A'];
+		printf("%c",x);
 	x=inverse_letter(&(e->rotor1),x);
+	printf("%c",x);
         x=inverse_letter(&(e->rotor2),x);
+		printf("%c",x);
         x=inverse_letter(&(e->rotor3),x);
+		printf("%c",x);
 	x=e->plugboard_permutation[x-'A'];
+	printf("%c\n",x);
 	return x;
 }
 
 int main(){
-	char rotors[5][27]={"DBYJRKALSNTVOUPMZEIWCXFHQG", "DMPSWGCROHXLBUIKTAQJZVEYFN","YWUSFHJLNPGTVXBZDRCIMAKEOQ", "KYHXNBDVJWATSCMRUIELFPZQOG","VZBRGITYUPSDNHLXAWMJQOFECK"};
-	char notches[5]={'Z','Z','Z','Z','Z'};
+	char rotors[5][27]={"EKMFLGDQVZNTOWYHXUSPAIBRCJ", "AJDKSIRUXBLHWTMCQGZNPYFVOE","BDFHJLCPRTXVZNYEIWGAKMUSQO", "ESOVPZJAYQUIRHXLNFTGKDCMWB","VZBRGITYUPSDNHLXAWMJQOFECK"};
+	char notches[5]={'Q','E','V','J','Z'};
 	char reflector[27]="YRUHQSLDPXNGOKMIEBFZCWVJAT";
-	char plugboard[27]="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	char plugboard[27]=/*"XBZUTFKLIJGHMONPQRSEDVWAYC";*/"XBZDTFKHIJGLMONPQRSEUVWAYC";
 	char *enc;
 	char *dec;
-	struct enigma e1=initialize_enigma(rotors,notches,0,1,3,reflector,plugboard,'Y','Y','Y','A','R','Q');
-	struct enigma e2=initialize_enigma(rotors,notches,0,1,3,reflector,plugboard,'Y','Y','Y','A','R','Q');
-	enc=encode(&e1,"CHAOS",5);
+	struct enigma e1=initialize_enigma(rotors,notches,0,1,3,reflector,plugboard,'B','E','R','G','E','C');
+	struct enigma e2=initialize_enigma(rotors,notches,0,1,3,reflector,plugboard,'B','E','R','G','E','C');
+	struct rotor r1,r2,r3;
+	char* rotor_ref;
+	enc=encode(&e1,"YFBMQMYJMZZZZEKSMZGSOYUSPCQFOGYCGZPLLSRDTHTLPSPAHQUZW",53);
 	printf("Encrypted message: %s \n",enc);
-	dec=encode(&e2,enc,5);
+	dec=encode(&e2,enc,53);
 	printf("Decrypted message: %s \n",dec);
+
 	free(enc);
 	free(dec);
+	rotate_rotors(&e1);
+	/*enc=rotor_and_reflector_permutation(reflector,plugboard,&(e1.rotor1),&(e1.rotor2),&(e1.rotor3));
+	printf("Permütasyon: %s \n",enc);
+	free(enc);*/
+	r1=initialize_rotor(rotors[0],'W','A','X');
+	r2=initialize_rotor(rotors[1],'B','A','X');
+	r3=initialize_rotor(rotors[3],'C','A','X');
+	rotor_ref=rotor_and_reflector_permutation(reflector,plugboard,&r1,&r2,&r3);
+	printf("Permütasyon: %s \n",rotor_ref);
+	free(rotor_ref);
+
+
 	return 0;
 }
