@@ -1,49 +1,29 @@
-# ==========================================
-# Operating System Files
-# ==========================================
 .DS_Store
 Thumbs.db
 *.swp
-
-# ==========================================
-# Language & Compiler Outputs (e.g., C/C++)
-# ==========================================
+*.swo
 *.o
 *.obj
 *.out
 *.exe
 *.log
-# If you compile executable binaries in a build folder:
 build/
 bin/
-
-# ==========================================
-# Dependencies & Package Managers
-# ==========================================
 node_modules/
 .pnp/
 *.gem
 venv/
 .venv/
 env/
-
-# ==========================================
-# IDEs and Text Editors
-# ==========================================
 .vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
-
-# ==========================================
-# Secrets and Credentials (CRITICAL)
-# ==========================================
 .env
 .env.local
 .env.*.local
 *.pem
 *.key
 credentials.json
-
 dsu
 enigma
