@@ -2,6 +2,8 @@
 #include<stdlib.h>
 #include <string.h>
 
+char rotors[5][27]={"EKMFLGDQVZNTOWYHXUSPAIBRCJ", "AJDKSIRUXBLHWTMCQGZNPYFVOE","BDFHJLCPRTXVZNYEIWGAKMUSQO", "ESOVPZJAYQUIRHXLNFTGKDCMWB","VZBRGITYUPSDNHLXAWMJQOFECK"};
+
 struct rotor{
 	char base_permutation[27];
 	char current_permutation[27];

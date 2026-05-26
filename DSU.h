@@ -12,9 +12,9 @@ struct plugboard_connection {
 
 struct DSU {
 	struct plugboard_connection *pc;
-    	int *parent ;
-    	int *size;
-    	int length;
+    int *parent ;
+    int *size;
+    int length;
 	int capacity;
 	int *classes;
 };
