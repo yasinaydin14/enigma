@@ -1,4 +1,4 @@
-# Enigma Simulator & Bombe Machine
+# Enigma Simulator
 
-An Enigma machine simulator and Bombe decryption machine written in ANSI C.
+An Enigma machine simulator in C.
 
